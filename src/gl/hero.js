@@ -39,6 +39,11 @@ void main() {
   // the body sinks into the dark towards the bottom of the frame
   c *= mix(.3, 1., smoothstep(.0, .5, vUv.y));
   a *= smoothstep(0., .2, vUv.y);
+  // and toward the sides, so shoulders cut off by the original photo fade out instead of ending in a straight line
+  float side = smoothstep(0., .16, vUv.x) * smoothstep(1., .84, vUv.x);
+  side = mix(side, 1., smoothstep(.62, .78, vUv.y));
+  c *= mix(.35, 1., side);
+  a *= side;
 
   c += (hash(floor(gl_FragCoord.xy) + floor(uTime * 12.)) - .5) * .03;
 
