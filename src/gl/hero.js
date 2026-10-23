@@ -44,6 +44,8 @@ void main() {
   side = mix(side, 1., smoothstep(.62, .78, vUv.y));
   c *= mix(.35, 1., side);
   a *= side;
+  // a head cut off at the top of the original photo dissolves upward the same way
+  a *= smoothstep(1., .9, vUv.y);
 
   c += (hash(floor(gl_FragCoord.xy) + floor(uTime * 12.)) - .5) * .03;
 
